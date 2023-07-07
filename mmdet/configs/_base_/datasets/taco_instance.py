@@ -104,3 +104,6 @@ test_evaluator = val_evaluator
 #     format_only=True,
 #     ann_file=data_root + 'annotations/image_info_test-dev2017.json',
 #     outfile_prefix='./work_dirs/coco_instance/test')
+
+# Load pretrained model to obtain higher results
+# https://mmdetection.readthedocs.io/en/latest/user_guides/train.html#train-with-customized-datasets
