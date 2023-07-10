@@ -6,7 +6,7 @@ from mmdet.datasets.taco import TACODataset
 from mmdet.datasets.samplers.batch_sampler import AspectRatioBatchSampler
 from mmdet.datasets.transforms.formatting import PackDetInputs
 from mmdet.datasets.transforms.loading import LoadAnnotations
-from mmdet.datasets.transforms.transforms import RandomFlip, Resize
+from mmdet.datasets.transforms.transforms import RandomFlip, Resize, PhotoMetricDistortion
 from mmdet.evaluation.metrics.coco_metric import CocoMetric
 
 # dataset settings
