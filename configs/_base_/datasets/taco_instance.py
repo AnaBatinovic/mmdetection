@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'TACODataset'
-data_root = '/home/steffy/Filip/mmdetection/data/taco/data/'
+data_root = '/home/zozan-server/Work/FER/TACO/data/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -21,6 +21,7 @@ train_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
     dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
     dict(type='Resize', scale=(1333, 800), keep_ratio=True),
+    #dict(type='Mosaic', prob=0.3),
     dict(type='RandomFlip', prob=0.5),
     dict(type='PackDetInputs')
 ]
@@ -34,39 +35,55 @@ test_pipeline = [
         meta_keys=('img_id', 'img_path', 'ori_shape', 'img_shape',
                    'scale_factor'))
 ]
-train_dataloader = dict(
-    batch_size=2,
-    num_workers=2,
-    persistent_workers=True,
-    sampler=dict(type='DefaultSampler', shuffle=True),
-    batch_sampler=dict(type='AspectRatioBatchSampler'),
-    dataset=dict(
+
+trainTacoDataset = dict(
         type=dataset_type,
         data_root=data_root,
         ann_file='taco_train.json',
         data_prefix=dict(img=''),
         filter_cfg=dict(filter_empty_gt=True, min_size=32),
         pipeline=train_pipeline,
-        backend_args=backend_args))
+        backend_args=backend_args)
+
+balancedTrainTacoDataset=dict(
+        type='ClassBalancedDataset',
+        oversample_thr=0.4,
+        dataset=trainTacoDataset)
+
+
+
+valTacoDataset = dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file='taco_val.json',
+        data_prefix=dict(img=''),
+        filter_cfg=dict(filter_empty_gt=True, min_size=32),
+        pipeline=train_pipeline,
+        backend_args=backend_args)
+
+
+
+train_dataloader = dict(
+    batch_size=2,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(type='DefaultSampler', shuffle=True),
+    batch_sampler=dict(type='AspectRatioBatchSampler'),
+    dataset=balancedTrainTacoDataset)
+
 val_dataloader = dict(
     batch_size=1,
     num_workers=2,
     persistent_workers=True,
     drop_last=False,
     sampler=dict(type='DefaultSampler', shuffle=False),
-    dataset=dict(
-        type=dataset_type,
-        data_root=data_root,
-        ann_file='taco_val.json',
-        data_prefix=dict(img=''),
-        test_mode=True,
-        pipeline=test_pipeline,
-        backend_args=backend_args))
+    dataset=valTacoDataset)
+
 test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='CocoMetric',
-    ann_file=data_root + 'annotations/instances_val2017.json',
+    ann_file=data_root + 'taco_val.json',
     metric=['bbox', 'segm'],
     format_only=False,
     backend_args=backend_args)
