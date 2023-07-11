@@ -22,12 +22,14 @@ train_pipeline = [
     dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
     dict(type='Resize', scale=(1333, 800), keep_ratio=True),
     #dict(type='Mosaic', prob=0.3),
-    dict(type='RandomFlip', prob=0.2),
+    dict(type='RandomFlip', prob=0.4, direction=['horizontal', 'vertical']),
+    dict(type='Normalize', mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225]), 
     dict(type='PackDetInputs')
 ]
 test_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
     dict(type='Resize', scale=(1333, 800), keep_ratio=True),
+    dict(type='Normalize', mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225]), 
     # If you don't have a gt annotation, delete the pipeline
     dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
     dict(

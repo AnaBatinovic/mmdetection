@@ -30,16 +30,16 @@ backend_args = None
 
 train_pipeline = [
     dict(type=LoadImageFromFile, backend_args=backend_args),
-    dict(type=LoadAnnotations, with_bbox=True, with_mask=True),
+    dict(type=LoadAnnotations, with_bbox=True, with_mask=True, with_seg=True),
     dict(type=Resize, scale=(1333, 800), keep_ratio=True),
-    dict(type=RandomFlip, prob=0.5),
+    dict(type=RandomFlip, prob=0.5, direction=["horizontal", "vertical"]),
     dict(type=PackDetInputs)
 ]
 test_pipeline = [
     dict(type=LoadImageFromFile, backend_args=backend_args),
     dict(type=Resize, scale=(1333, 800), keep_ratio=True),
     # If you don't have a gt annotation, delete the pipeline
-    dict(type=LoadAnnotations, with_bbox=True, with_mask=True),
+    dict(type=LoadAnnotations, with_bbox=True, with_mask=True, with_seg=True),
     dict(
         type=PackDetInputs,
         meta_keys=('img_id', 'img_path', 'ori_shape', 'img_shape',

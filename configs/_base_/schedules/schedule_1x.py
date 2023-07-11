@@ -1,10 +1,9 @@
-max_epochs_ = 50
+max_epochs_ = 20
 
 # training schedule for 1x
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs_, val_interval=1)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
-
 
 
 # learning rate
@@ -23,7 +22,7 @@ param_scheduler = [
 # optimizer
 optim_wrapper = dict(
     type='OptimWrapper',
-    optimizer=dict(type='SGD', lr=0.015, momentum=0.9, weight_decay=0.0001))
+    optimizer=dict(type='SGD', lr=0.005, momentum=0.9, weight_decay=0.0001))
 
 # Default setting for scaling LR automatically
 #   - `enable` means enable scaling LR automatically
