@@ -1,4 +1,4 @@
-max_epochs_ = 10
+max_epochs_ = 20
 
 # training schedule for 1x
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs_, val_interval=1)

@@ -48,10 +48,10 @@ trainTacoDataset = dict(
         pipeline=train_pipeline,
         backend_args=backend_args)
 
-balancedTrainTacoDataset=dict(
-        type='ClassBalancedDataset',
-        oversample_thr=1.0,
-        dataset=trainTacoDataset)
+#balancedTrainTacoDataset=dict(
+#        type='ClassBalancedDataset',
+#        oversample_thr=1.0,
+#        dataset=trainTacoDataset)
 
 valTacoDataset = dict(
         type=dataset_type,
@@ -68,7 +68,7 @@ train_dataloader = dict(
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     batch_sampler=dict(type='AspectRatioBatchSampler'),
-    dataset=balancedTrainTacoDataset)
+    dataset=trainTacoDataset)
 
 val_dataloader = dict(
     batch_size=1,

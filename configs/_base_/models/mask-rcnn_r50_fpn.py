@@ -1,5 +1,5 @@
 classes_ = 10
-weight_ = 2
+weight_ = 3
 
 # model settings
 model = dict(
