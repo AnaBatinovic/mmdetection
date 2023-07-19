@@ -1,7 +1,7 @@
-_base_ = 'ssj_270k_coco-instance.py'
+_base_ = 'ssj_270k_taco-instance.py'
 # dataset settings
-dataset_type = 'CocoDataset'
-data_root = 'data/coco/'
+dataset_type = 'TACODataset'
+data_root = '/home/zozan-server/Work/FER/TACO/data'
 
 image_size = (1024, 1024)
 
@@ -37,7 +37,7 @@ load_pipeline = [
         recompute_bbox=True,
         allow_negative_crop=True),
     dict(type='FilterAnnotations', min_gt_bbox_wh=(1e-2, 1e-2)),
-    dict(type='RandomFlip', prob=0.5),
+    dict(type='RandomFlip', prob=0.3),
     dict(type='Pad', size=image_size),
 ]
 train_pipeline = [
@@ -52,9 +52,15 @@ train_dataloader = dict(
         dataset=dict(
             type=dataset_type,
             data_root=data_root,
-            ann_file='annotations/instances_train2017.json',
-            data_prefix=dict(img='train2017/'),
+            ann_file='taco_train.json',
+            data_prefix=dict(img=''),
             filter_cfg=dict(filter_empty_gt=True, min_size=32),
             pipeline=load_pipeline,
             backend_args=backend_args),
         pipeline=train_pipeline))
+
+vis_backends = [dict(type='LocalVisBackend')]
+visualizer = dict(
+    type='DetLocalVisualizer',
+    vis_backends=[dict(type='LocalVisBackend')],
+    name='visualizer')

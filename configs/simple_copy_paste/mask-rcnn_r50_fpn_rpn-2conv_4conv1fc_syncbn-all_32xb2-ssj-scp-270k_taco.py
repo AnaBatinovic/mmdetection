@@ -1,17 +1,17 @@
 _base_ = [
     '../_base_/models/mask-rcnn_r50_fpn.py',
     # 270k iterations with batch_size 64 is roughly equivalent to 144 epochs
-    '../common/ssj_scp_270k_coco-instance.py'
+    '../common/ssj_scp_270k_taco-instance.py'
 ]
 
 image_size = (1024, 1024)
 batch_augments = [
     dict(type='BatchFixedSizePad', size=image_size, pad_mask=True)
 ]
-norm_cfg = dict(type='SyncBN', requires_grad=True)
+norm_cfg = dict(type='BN', requires_grad=True)
 # Use MMSyncBN that handles empty tensor in head. It can be changed to
 # SyncBN after https://github.com/pytorch/pytorch/issues/36530 is fixed
-head_norm_cfg = dict(type='MMSyncBN', requires_grad=True)
+head_norm_cfg = dict(type='BN', requires_grad=True)
 model = dict(
     # the model is trained from scratch, so init_cfg is None
     data_preprocessor=dict(

@@ -19,19 +19,20 @@ backend_args = None
 
 train_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
-    dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
+    dict(type='LoadAnnotations', with_bbox=True, with_mask=True, with_seg=True),
+    dict(type="PhotoMetricDistortion"),
     dict(type='Resize', scale=(1333, 800), keep_ratio=True),
     #dict(type='Mosaic', prob=0.3),
     dict(type='RandomFlip', prob=0.4, direction=['horizontal', 'vertical']),
-    dict(type='Normalize', mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225]), 
+    #dict(type='Normalize', mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225]), 
     dict(type='PackDetInputs')
 ]
 test_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
     dict(type='Resize', scale=(1333, 800), keep_ratio=True),
-    dict(type='Normalize', mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225]), 
+    #dict(type='Normalize', mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225]), 
     # If you don't have a gt annotation, delete the pipeline
-    dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
+    dict(type='LoadAnnotations', with_bbox=True, with_mask=True, with_seg=True),
     dict(
         type='PackDetInputs',
         meta_keys=('img_id', 'img_path', 'ori_shape', 'img_shape',
@@ -49,10 +50,8 @@ trainTacoDataset = dict(
 
 balancedTrainTacoDataset=dict(
         type='ClassBalancedDataset',
-        oversample_thr=0.4,
+        oversample_thr=1.0,
         dataset=trainTacoDataset)
-
-
 
 valTacoDataset = dict(
         type=dataset_type,
@@ -62,8 +61,6 @@ valTacoDataset = dict(
         filter_cfg=dict(filter_empty_gt=True, min_size=32),
         pipeline=train_pipeline,
         backend_args=backend_args)
-
-
 
 train_dataloader = dict(
     batch_size=2,
