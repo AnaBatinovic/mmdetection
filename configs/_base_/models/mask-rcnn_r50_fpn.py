@@ -1,4 +1,4 @@
-classes_ = 10
+classes_ = 1
 weight_ = 3
 
 # model settings

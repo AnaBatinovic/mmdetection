@@ -1,7 +1,7 @@
 _base_ = 'ssj_270k_taco-instance.py'
 # dataset settings
 dataset_type = 'TACODataset'
-data_root = '/home/zozan-server/Work/FER/TACO/data'
+data_root = '/root/PIPE/'
 
 image_size = (1024, 1024)
 
@@ -52,7 +52,7 @@ train_dataloader = dict(
         dataset=dict(
             type=dataset_type,
             data_root=data_root,
-            ann_file='taco_train.json',
+            ann_file='train/train.json',
             data_prefix=dict(img=''),
             filter_cfg=dict(filter_empty_gt=True, min_size=32),
             pipeline=load_pipeline,

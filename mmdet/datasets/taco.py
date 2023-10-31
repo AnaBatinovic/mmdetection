@@ -16,13 +16,11 @@ class TACODataset(BaseDetDataset):
 
     METAINFO = {
         'classes':
-        ('Other', 'Bottle', 'Bottle cap', 'Can', 'Cup', 'Lid',
-          'Plastic bag + wrapper', 'Pop tab', 'Straw', 'Cigarette'),
+        ('pipe'),
 
         # palette is a list of color tuples, which is used for visualization.
         'palette':
-        [(220, 20, 60), (119, 11, 32), (0, 0, 142), (0, 0, 230), (106, 0, 228),
-         (0, 60, 100), (0, 80, 100), (0, 0, 70), (0, 0, 192), (250, 170, 30)]
+        [(220, 20, 60)]
     }
     COCOAPI = COCO
     # ann_id is unique in coco dataset.
