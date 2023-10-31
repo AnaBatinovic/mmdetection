@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'TACODataset'
-data_root = '/home/zozan-server/Work/FER/TACO/data/'
+data_root = '/root/PIPE/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -42,7 +42,7 @@ test_pipeline = [
 trainTacoDataset = dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='taco_train.json',
+        ann_file='train/train.json',
         data_prefix=dict(img=''),
         filter_cfg=dict(filter_empty_gt=True, min_size=32),
         pipeline=train_pipeline,
@@ -56,7 +56,7 @@ trainTacoDataset = dict(
 valTacoDataset = dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='taco_val.json',
+        ann_file='valid/valid.json',
         data_prefix=dict(img=''),
         filter_cfg=dict(filter_empty_gt=True, min_size=32),
         pipeline=train_pipeline,
@@ -82,7 +82,7 @@ test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='CocoMetric',
-    ann_file=data_root + 'taco_val.json',
+    ann_file=data_root + 'valid/valid.json',
     metric=['bbox', 'segm'],
     format_only=False,
     backend_args=backend_args)

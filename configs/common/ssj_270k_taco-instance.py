@@ -1,7 +1,7 @@
 _base_ = '../_base_/default_runtime.py'
 # dataset settings
 dataset_type = 'TACODataset'
-data_root = '/home/zozan-server/Work/FER/TACO/data/'
+data_root = '/root/PIPE/'
 
 image_size = (1024, 1024)
 

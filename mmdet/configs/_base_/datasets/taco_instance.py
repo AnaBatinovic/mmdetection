@@ -54,7 +54,7 @@ train_dataloader = dict(
     dataset=dict(
         type=CocoDataset,
         data_root=data_root,
-        ann_file='taco_train.json',
+        ann_file='train/train.json',
         data_prefix=dict(img=''),
         filter_cfg=dict(filter_empty_gt=True, min_size=32),
         pipeline=train_pipeline,
@@ -68,7 +68,7 @@ val_dataloader = dict(
     dataset=dict(
         type=CocoDataset,
         data_root=data_root,
-        ann_file='taco_val.json',
+        ann_file='valid/valid.json',
         data_prefix=dict(img='val2017/'),
         test_mode=True,
         pipeline=test_pipeline,
@@ -77,7 +77,7 @@ test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type=CocoMetric,
-    ann_file=data_root + 'taco_val.json',
+    ann_file=data_root + 'valid/valid.json',
     metric=['bbox', 'segm'],
     format_only=False,
     backend_args=backend_args)
