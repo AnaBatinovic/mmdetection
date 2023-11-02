@@ -1,5 +1,5 @@
 
-_base_ = '../mask_rcnn/mask-rcnn_r50_fpn_1x_taco.py'
+_base_ = '../mask_rcnn/mask-rcnn_r101_fpn_1x_taco.py'
 
 albu_train_transforms = [
     dict(
