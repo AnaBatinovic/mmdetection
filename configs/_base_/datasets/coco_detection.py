@@ -1,5 +1,6 @@
 # dataset settings
-dataset_type = 'CocoDataset'
+# dataset_type = 'CocoDataset'
+dataset_type = 'TACODataset'
 data_root = '/data/crack/'
 
 # Example to use different file client

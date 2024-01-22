@@ -2,6 +2,11 @@ _base_ = [
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_1x.py',
     '../_base_/datasets/coco_detection.py', './rtmdet_tta.py'
 ]
+
+n_classes = 1
+n_workers = 2
+batch_size_ = 2
+
 model = dict(
     type='RTMDet',
     data_preprocessor=dict(
@@ -29,7 +34,7 @@ model = dict(
         act_cfg=dict(type='SiLU', inplace=True)),
     bbox_head=dict(
         type='RTMDetSepBNHead',
-        num_classes=80,
+        num_classes=n_classes,
         in_channels=256,
         stacked_convs=2,
         feat_channels=256,
@@ -110,13 +115,13 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=32,
-    num_workers=10,
+    batch_size=batch_size_,
+    num_workers=n_workers,
     batch_sampler=None,
     pin_memory=True,
     dataset=dict(pipeline=train_pipeline))
 val_dataloader = dict(
-    batch_size=5, num_workers=10, dataset=dict(pipeline=test_pipeline))
+    batch_size=batch_size_, num_workers=n_workers, dataset=dict(pipeline=test_pipeline))
 test_dataloader = val_dataloader
 
 max_epochs = 300
