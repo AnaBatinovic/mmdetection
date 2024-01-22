@@ -4,8 +4,11 @@ from mmengine.optim.scheduler.lr_scheduler import LinearLR, MultiStepLR
 from mmengine.runner.loops import EpochBasedTrainLoop, TestLoop, ValLoop
 from torch.optim.sgd import SGD
 
+max_epochs_ = 20
+end_epochs_ = 30
+
 # training schedule for 1x
-train_cfg = dict(type=EpochBasedTrainLoop, max_epochs=12, val_interval=1)
+train_cfg = dict(type=EpochBasedTrainLoop, max_epochs=max_epochs_, val_interval=1)
 val_cfg = dict(type=ValLoop)
 test_cfg = dict(type=TestLoop)
 
@@ -15,7 +18,7 @@ param_scheduler = [
     dict(
         type=MultiStepLR,
         begin=0,
-        end=30,
+        end=end_epochs_,
         by_epoch=True,
         milestones=[8, 11],
         gamma=0.1)

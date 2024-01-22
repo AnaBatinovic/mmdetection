@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'TACODataset'
-data_root = '/root/PIPE/'
+data_root = '/data/crack/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -48,22 +48,8 @@ trainTacoDataset = dict(
         pipeline=train_pipeline,
         backend_args=backend_args)
 
-#balancedTrainTacoDataset=dict(
-#        type='ClassBalancedDataset',
-#        oversample_thr=1.0,
-#        dataset=trainTacoDataset)
-
-valTacoDataset = dict(
-        type=dataset_type,
-        data_root=data_root,
-        ann_file='valid/valid.json',
-        data_prefix=dict(img=''),
-        filter_cfg=dict(filter_empty_gt=True, min_size=32),
-        pipeline=train_pipeline,
-        backend_args=backend_args)
-
 train_dataloader = dict(
-    batch_size=2,
+    batch_size=1,
     num_workers=2,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
@@ -76,8 +62,14 @@ val_dataloader = dict(
     persistent_workers=True,
     drop_last=False,
     sampler=dict(type='DefaultSampler', shuffle=False),
-    dataset=valTacoDataset)
-
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file='valid/valid.json',
+        data_prefix=dict(img=''),
+        test_mode=True,
+        pipeline=test_pipeline,
+        backend_args=backend_args))
 test_dataloader = val_dataloader
 
 val_evaluator = dict(

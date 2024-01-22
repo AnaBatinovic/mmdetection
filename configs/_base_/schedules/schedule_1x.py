@@ -1,4 +1,4 @@
-max_epochs_ = 20
+max_epochs_ = 30
 
 # training schedule for 1x
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=max_epochs_, val_interval=1)
@@ -22,7 +22,7 @@ param_scheduler = [
 # optimizer
 optim_wrapper = dict(
     type='OptimWrapper',
-    optimizer=dict(type='SGD', lr=0.012, momentum=0.8, weight_decay=0.0001))
+    optimizer=dict(type='SGD', lr=0.0012, momentum=0.8, weight_decay=0.0001))
 
 # Default setting for scaling LR automatically
 #   - `enable` means enable scaling LR automatically

@@ -11,7 +11,10 @@ from mmdet.evaluation.metrics.coco_metric import CocoMetric
 
 # dataset settings
 dataset_type = 'TACODataset'
-data_root = 'data/taco/'
+# TACO
+#data_root = 'data/taco/'
+# CRACK
+data_root = '/data/crack/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -69,7 +72,7 @@ val_dataloader = dict(
         type=CocoDataset,
         data_root=data_root,
         ann_file='valid/valid.json',
-        data_prefix=dict(img='val2017/'),
+        data_prefix=dict(img=''),
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
@@ -82,28 +85,3 @@ val_evaluator = dict(
     format_only=False,
     backend_args=backend_args)
 test_evaluator = val_evaluator
-
-# inference on test dataset and
-# format the output results for submission.
-# test_dataloader = dict(
-#     batch_size=1,
-#     num_workers=2,
-#     persistent_workers=True,
-#     drop_last=False,
-#     sampler=dict(type=DefaultSampler, shuffle=False),
-#     dataset=dict(
-#         type=CocoDataset,
-#         data_root=data_root,
-#         ann_file=data_root + 'annotations/image_info_test-dev2017.json',
-#         data_prefix=dict(img='test2017/'),
-#         test_mode=True,
-#         pipeline=test_pipeline))
-# test_evaluator = dict(
-#     type=CocoMetric,
-#     metric=['bbox', 'segm'],
-#     format_only=True,
-#     ann_file=data_root + 'annotations/image_info_test-dev2017.json',
-#     outfile_prefix='./work_dirs/coco_instance/test')
-
-# Load pretrained model to obtain higher results
-# https://mmdetection.readthedocs.io/en/latest/user_guides/train.html#train-with-customized-datasets

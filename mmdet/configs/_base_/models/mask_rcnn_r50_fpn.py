@@ -23,6 +23,8 @@ from mmdet.models.task_modules.prior_generators.anchor_generator import \
     AnchorGenerator
 from mmdet.models.task_modules.samplers.random_sampler import RandomSampler
 
+n_classes = 1
+
 # model settings
 model = dict(
     type=MaskRCNN,
@@ -76,7 +78,7 @@ model = dict(
             in_channels=256,
             fc_out_channels=1024,
             roi_feat_size=7,
-            num_classes=80,
+            num_classes=n_classes,
             bbox_coder=dict(
                 type=DeltaXYWHBBoxCoder,
                 target_means=[0., 0., 0., 0.],
