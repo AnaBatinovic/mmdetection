@@ -4,8 +4,9 @@ _base_ = [
 ]
 
 n_classes = 1
-n_workers = 2
-batch_size_ = 2
+n_workers = 4
+batch_size_ = 4
+data_root_ = "/data/crack/"
 
 model = dict(
     type='RTMDet',
@@ -61,9 +62,9 @@ model = dict(
     test_cfg=dict(
         nms_pre=30000,
         min_bbox_size=0,
-        score_thr=0.001,
+        score_thr=0.01,
         nms=dict(type='nms', iou_threshold=0.65),
-        max_per_img=300),
+        max_per_img=50),
 )
 
 train_pipeline = [
@@ -108,8 +109,7 @@ test_pipeline = [
     dict(type='Resize', scale=(640, 640), keep_ratio=True),
     dict(type='Pad', size=(640, 640), pad_val=dict(img=(114, 114, 114))),
     dict(type='LoadAnnotations', with_bbox=True),
-    dict(
-        type='PackDetInputs',
+    dict(type='PackDetInputs',
         meta_keys=('img_id', 'img_path', 'ori_shape', 'img_shape',
                    'scale_factor'))
 ]
@@ -120,22 +120,20 @@ train_dataloader = dict(
     batch_sampler=None,
     pin_memory=True,
     dataset=dict(pipeline=train_pipeline))
-val_dataloader = dict(
-    batch_size=batch_size_, num_workers=n_workers, dataset=dict(pipeline=test_pipeline))
+
+val_dataloader = dict(batch_size=batch_size_, num_workers=n_workers, dataset=dict(pipeline=test_pipeline))
+
 test_dataloader = val_dataloader
 
-max_epochs = 300
+max_epochs = 40
 stage2_num_epochs = 20
 base_lr = 0.004
-interval = 10
+interval = 1
 
 train_cfg = dict(
     max_epochs=max_epochs,
     val_interval=interval,
     dynamic_intervals=[(max_epochs - stage2_num_epochs, 1)])
-
-val_evaluator = dict(proposal_nums=(100, 1, 10))
-test_evaluator = val_evaluator
 
 # optimizer
 optim_wrapper = dict(

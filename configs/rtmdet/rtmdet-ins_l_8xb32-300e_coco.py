@@ -1,6 +1,8 @@
 _base_ = './rtmdet_l_8xb32-300e_coco.py'
 
 n_classes = 1
+data_root_ = "/data/crack/"
+
 model = dict(
     bbox_head=dict(
         _delete_=True,
@@ -102,5 +104,11 @@ custom_hooks = [
         switch_pipeline=train_pipeline_stage2)
 ]
 
-val_evaluator = dict(metric=['bbox', 'segm'])
+val_evaluator = dict(
+    type='CocoMetric',
+    ann_file=data_root_ + 'valid/valid.json',
+    metric=['bbox', 'segm'],
+    format_only=False,
+    backend_args=_base_.backend_args)
+    
 test_evaluator = val_evaluator
